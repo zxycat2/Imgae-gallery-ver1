@@ -10,6 +10,7 @@ import UIKit
 
 class Collection_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+
     @IBOutlet weak var collection: UICollectionView!{
         didSet{
             collection.dataSource = self
@@ -19,12 +20,13 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     
     //有多少个cell
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return 0
     }
     
     //每个cell怎么搞
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        return cell
     }
     
    

@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		BBD52AF621A62CCA009818AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52AF521A62CCA009818AD /* AppDelegate.swift */; };
-		BBD52AF821A62CCA009818AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52AF721A62CCA009818AD /* ViewController.swift */; };
 		BBD52AFB21A62CCA009818AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBD52AF921A62CCA009818AD /* Main.storyboard */; };
 		BBD52AFD21A62CCC009818AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD52AFC21A62CCC009818AD /* Assets.xcassets */; };
 		BBD52B0021A62CCC009818AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBD52AFE21A62CCC009818AD /* LaunchScreen.storyboard */; };
 		BBD52B0821A63F13009818AD /* Collection_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52B0721A63F13009818AD /* Collection_ViewController.swift */; };
 		BBD52B0A21A72F2C009818AD /* Collection_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52B0921A72F2C009818AD /* Collection_Cell.swift */; };
+		BBD52B0C21A74043009818AD /* ViewInCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52B0B21A74043009818AD /* ViewInCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BBD52AF221A62CCA009818AD /* Imgae gallery ver1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Imgae gallery ver1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD52AF521A62CCA009818AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BBD52AF721A62CCA009818AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BBD52AFA21A62CCA009818AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBD52AFC21A62CCC009818AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBD52AFF21A62CCC009818AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BBD52B0121A62CCC009818AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBD52B0721A63F13009818AD /* Collection_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection_ViewController.swift; sourceTree = "<group>"; };
 		BBD52B0921A72F2C009818AD /* Collection_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection_Cell.swift; sourceTree = "<group>"; };
+		BBD52B0B21A74043009818AD /* ViewInCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInCollectionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +42,7 @@
 		BBD52AE921A62CCA009818AD = {
 			isa = PBXGroup;
 			children = (
+				BBD52B0B21A74043009818AD /* ViewInCollectionCell.swift */,
 				BBD52AF421A62CCA009818AD /* Imgae gallery ver1 */,
 				BBD52AF321A62CCA009818AD /* Products */,
 			);
@@ -59,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				BBD52AF521A62CCA009818AD /* AppDelegate.swift */,
-				BBD52AF721A62CCA009818AD /* ViewController.swift */,
 				BBD52AF921A62CCA009818AD /* Main.storyboard */,
 				BBD52B0921A72F2C009818AD /* Collection_Cell.swift */,
 				BBD52B0721A63F13009818AD /* Collection_ViewController.swift */,
@@ -142,9 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBD52B0821A63F13009818AD /* Collection_ViewController.swift in Sources */,
-				BBD52AF821A62CCA009818AD /* ViewController.swift in Sources */,
 				BBD52AF621A62CCA009818AD /* AppDelegate.swift in Sources */,
 				BBD52B0A21A72F2C009818AD /* Collection_Cell.swift in Sources */,
+				BBD52B0C21A74043009818AD /* ViewInCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
