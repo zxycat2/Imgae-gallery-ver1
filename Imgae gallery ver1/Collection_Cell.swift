@@ -10,4 +10,5 @@ import UIKit
 
 class Collection_Cell: UICollectionViewCell {
     
+    @IBOutlet weak var viewInCollectionCell: ViewInCollectionCell!
 }

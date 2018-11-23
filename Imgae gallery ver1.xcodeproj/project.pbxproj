@@ -42,7 +42,6 @@
 		BBD52AE921A62CCA009818AD = {
 			isa = PBXGroup;
 			children = (
-				BBD52B0B21A74043009818AD /* ViewInCollectionCell.swift */,
 				BBD52AF421A62CCA009818AD /* Imgae gallery ver1 */,
 				BBD52AF321A62CCA009818AD /* Products */,
 			);
@@ -59,6 +58,7 @@
 		BBD52AF421A62CCA009818AD /* Imgae gallery ver1 */ = {
 			isa = PBXGroup;
 			children = (
+				BBD52B0B21A74043009818AD /* ViewInCollectionCell.swift */,
 				BBD52AF521A62CCA009818AD /* AppDelegate.swift */,
 				BBD52AF921A62CCA009818AD /* Main.storyboard */,
 				BBD52B0921A72F2C009818AD /* Collection_Cell.swift */,
