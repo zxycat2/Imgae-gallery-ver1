@@ -15,10 +15,10 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
         for item in coordinator.items{
             //当drop来自内部
             if let itemSourceIndexPath = item.sourceIndexPath{
-                if let imageName = item.dragItem.localObject{
+                if let localphotoStruc = item.dragItem.localObject{
                     collectionView.performBatchUpdates({
-                        self.pciDic.remove(at: itemSourceIndexPath.item)
-                        self.pciDic.insert(imageName as! String, at: destinationIndexPath.item)
+                        self.collectionViewModel.remove(at: itemSourceIndexPath.item)
+                        self.collectionViewModel.insert(localphotoStruc as! photoStruc, at: destinationIndexPath.item)
                         self.collection.deleteItems(at: [itemSourceIndexPath])
                         self.collection.insertItems(at: [destinationIndexPath])
                     })
@@ -61,7 +61,7 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
         if let image = (self.collection.cellForItem(at: indexpath) as? Collection_Cell)?.viewInCollectionCell.backgroundImage{
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
             //local data
-            dragItem.localObject = self.pciDic[indexpath.item]
+            dragItem.localObject = self.collectionViewModel[indexpath.item]
             return [dragItem]
         }else{
             return []
@@ -78,8 +78,14 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
             collection.dropDelegate = self
         }
     }
-    //临时
-    var pciDic = [ "twogirls", "Megumi", "onion"]
+    //model的结构
+    struct photoStruc {
+        var name:String?
+        var url:URL?
+        var aspecRatio:Float
+    }
+    //collection view的model
+    var collectionViewModel = [photoStruc(name: "twogirls", url: nil, aspecRatio: 1202/1700), photoStruc(name: "Megumi", url: nil, aspecRatio: 1932/1266),photoStruc(name: "onion", url: nil, aspecRatio: 2396/1920)]
     //有多少个cell
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
@@ -90,11 +96,7 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     //cell大小
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.contentSize.width
-        let cgfloarImageHeight = UIImage(named: self.pciDic[indexPath.item])?.size.height
-        let cgfloarImageWidth = UIImage(named: self.pciDic[indexPath.item])?.size.width
-        let floatImageHeight = Float(cgfloarImageHeight!)
-        let floatImageWidth = Float(cgfloarImageWidth!)
-        let aspectRatio = floatImageHeight/floatImageWidth
+        let aspectRatio = self.collectionViewModel[indexPath.item].aspecRatio
         return CGSize(width: self.scale*width, height: self.scale*CGFloat(Float(width)*aspectRatio))
         
     }
@@ -103,7 +105,11 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         if let collectCell = cell as? Collection_Cell{
-            collectCell.viewInCollectionCell.backgroundImage = UIImage(named: self.pciDic[indexPath.item])
+            //当是默认图片的时候(?)
+            if let picname = self.collectionViewModel[indexPath.item].name{
+                collectCell.viewInCollectionCell.backgroundImage = UIImage(named: picname)
+            }
+            
         }
         print("create"+String(indexPath.item))
         return cell
