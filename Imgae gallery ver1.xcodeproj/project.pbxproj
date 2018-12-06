@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB85718221B984C900BF8D5E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85718121B984C900BF8D5E /* Utilities.swift */; };
 		BBD52AF621A62CCA009818AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD52AF521A62CCA009818AD /* AppDelegate.swift */; };
 		BBD52AFB21A62CCA009818AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBD52AF921A62CCA009818AD /* Main.storyboard */; };
 		BBD52AFD21A62CCC009818AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD52AFC21A62CCC009818AD /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB85718121B984C900BF8D5E /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BBD52AF221A62CCA009818AD /* Imgae gallery ver1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Imgae gallery ver1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD52AF521A62CCA009818AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBD52AFA21A62CCA009818AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				BBD52AFC21A62CCC009818AD /* Assets.xcassets */,
 				BBD52AFE21A62CCC009818AD /* LaunchScreen.storyboard */,
 				BBD52B0121A62CCC009818AD /* Info.plist */,
+				BB85718121B984C900BF8D5E /* Utilities.swift */,
 			);
 			path = "Imgae gallery ver1";
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				BBD52B0821A63F13009818AD /* Collection_ViewController.swift in Sources */,
 				BBD52AF621A62CCA009818AD /* AppDelegate.swift in Sources */,
 				BBD52B0A21A72F2C009818AD /* Collection_Cell.swift in Sources */,
+				BB85718221B984C900BF8D5E /* Utilities.swift in Sources */,
 				BBD52B0C21A74043009818AD /* ViewInCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

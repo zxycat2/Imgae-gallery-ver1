@@ -25,16 +25,20 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
                     //动画
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                 }
+                //当drop来自外部
+            }else{
+                let placeHolder = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "placeHolderCell"))
+                
             }
         }
         
     }
-    //关于是否接受drop(目前是b内部拖拽就只需要uiimage，外部就同时需要image和url)
+    //关于是否接受drop(目前是内部拖拽就只需要uiimage，外部就同时需要image和url)
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         let judge = (session.localDragSession?.localContext as? UICollectionView) == collectionView
         return judge ? session.canLoadObjects(ofClass: UIImage.self) : session.canLoadObjects(ofClass: UIImage.self)&&session.canLoadObjects(ofClass: NSURL.self)
     }
-    //关于drop类型
+    //关于drop类型(move/copy)
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         let judge = (session.localDragSession?.localContext as? UICollectionView) == collectionView
         return UICollectionViewDropProposal(operation: judge ? .move : .copy, intent: .insertAtDestinationIndexPath)
@@ -80,22 +84,17 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-    //cell高度
+    
     //cell的显示倍数
     var scale = CGFloat(0.5)
+    //cell大小
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        print("size"+String(indexPath.item))
-        
         let width = collectionView.contentSize.width
         let cgfloarImageHeight = UIImage(named: self.pciDic[indexPath.item])?.size.height
         let cgfloarImageWidth = UIImage(named: self.pciDic[indexPath.item])?.size.width
         let floatImageHeight = Float(cgfloarImageHeight!)
         let floatImageWidth = Float(cgfloarImageWidth!)
-        print(floatImageHeight)
-        print(floatImageWidth)
         let aspectRatio = floatImageHeight/floatImageWidth
-        
         return CGSize(width: self.scale*width, height: self.scale*CGFloat(Float(width)*aspectRatio))
         
     }

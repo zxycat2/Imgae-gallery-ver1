@@ -52,6 +52,40 @@
                                             <outlet property="viewInCollectionCell" destination="wNj-O6-3Or" id="ZME-WD-6QC"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="placeHolderCell" id="mKa-JF-5RT" customClass="Collection_Cell" customModule="Imgae_gallery_ver1" customModuleProvider="target">
+                                        <rect key="frame" x="44" y="700" width="706" height="680"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="706" height="680"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P18-41-hX0" customClass="ViewInCollectionCell" customModule="Imgae_gallery_ver1" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="40" width="666" height="620"/>
+                                                    <subviews>
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ZTR-Zu-vwk">
+                                                            <rect key="frame" x="323" y="300" width="20" height="20"/>
+                                                        </activityIndicatorView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="ZTR-Zu-vwk" firstAttribute="centerX" secondItem="P18-41-hX0" secondAttribute="centerX" id="GhI-Ut-Bb4"/>
+                                                        <constraint firstItem="ZTR-Zu-vwk" firstAttribute="centerY" secondItem="P18-41-hX0" secondAttribute="centerY" id="piF-AC-ahJ"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="P18-41-hX0" secondAttribute="bottom" constant="12" id="1rV-B0-0Mm"/>
+                                            <constraint firstItem="P18-41-hX0" firstAttribute="top" secondItem="mKa-JF-5RT" secondAttribute="topMargin" constant="12" id="4TF-pQ-UIy"/>
+                                            <constraint firstItem="P18-41-hX0" firstAttribute="leading" secondItem="mKa-JF-5RT" secondAttribute="leadingMargin" constant="12" id="S4A-gI-8JY"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="P18-41-hX0" secondAttribute="trailing" constant="12" id="nDd-CD-IJQ"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="viewInCollectionCell" destination="P18-41-hX0" id="83Z-8K-McQ"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tmp trash can" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30O-YA-3If">
