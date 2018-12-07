@@ -8,6 +8,69 @@
 
 import UIKit
 
+extension URL {
+    var imageURL: URL {
+        if let url = UIImage.urlToStoreLocallyAsJPEG(named: self.path) {
+            // this was created using UIImage.storeLocallyAsJPEG
+            return url
+        } else {
+            // check to see if there is an embedded imgurl reference
+            for query in query?.components(separatedBy: "&") ?? [] {
+                let queryComponents = query.components(separatedBy: "=")
+                if queryComponents.count == 2 {
+                    if queryComponents[0] == "imgurl", let url = URL(string: queryComponents[1].removingPercentEncoding ?? "") {
+                        return url
+                    }
+                }
+            }
+            return self.baseURL ?? self
+        }
+    }
+}
+extension UIImage
+{
+    private static let localImagesDirectory = "UIImage.storeLocallyAsJPEG"
+    
+    static func urlToStoreLocallyAsJPEG(named: String) -> URL? {
+        var name = named
+        let pathComponents = named.components(separatedBy: "/")
+        if pathComponents.count > 1 {
+            if pathComponents[pathComponents.count-2] == localImagesDirectory {
+                name = pathComponents.last!
+            } else {
+                return nil
+            }
+        }
+        if var url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            url = url.appendingPathComponent(localImagesDirectory)
+            do {
+                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+                url = url.appendingPathComponent(name)
+                if url.pathExtension != "jpg" {
+                    url = url.appendingPathExtension("jpg")
+                }
+                return url
+            } catch let error {
+                print("UIImage.urlToStoreLocallyAsJPEG \(error)")
+            }
+        }
+        return nil
+    }
+    
+    func storeLocallyAsJPEG(named name: String) -> URL? {
+        if let imageData = self.jpegData(compressionQuality: 1.0) {
+            if let url = UIImage.urlToStoreLocallyAsJPEG(named: name) {
+                do {
+                    try imageData.write(to: url)
+                    return url
+                } catch let error {
+                    print("UIImage.storeLocallyAsJPEG \(error)")
+                }
+            }
+        }
+        return nil
+    }
+}
 class Collection_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate{
     //执行drop的函数
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
@@ -27,7 +90,32 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
                 }
                 //当drop来自外部
             }else{
+                var photoAspectRatio:Float = 1.0
                 let placeHolder = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "placeHolderCell"))
+                //获取图片的长宽比
+                item.dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: {(provider, error) in
+                    if let photo = provider as? UIImage{
+                        photoAspectRatio = Float(photo.size.height/photo.size.width)
+                        
+                    }else{
+                        print("Can not get the aspeact ratio")
+                        placeHolder.deletePlaceholder()
+                    }
+                })
+                //获取图片url
+                item.dragItem.itemProvider.loadObject(ofClass: NSURL.self, completionHandler: {(provider, error) in
+                    DispatchQueue.main.async {
+                        if var photoURL = provider as? URL{
+                            photoURL = photoURL.imageURL
+                            placeHolder.commitInsertion(dataSourceUpdates: {insertionPath in
+                                self.collectionViewModel.insert(photoStruc(name: nil, url: photoURL, aspecRatio: photoAspectRatio), at: insertionPath.item)
+                            })
+                        }else{
+                            print("Can not get the URL")
+                            placeHolder.deletePlaceholder()
+                        }
+                    }
+                })
                 
             }
         }
@@ -55,7 +143,7 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, itmsForAdiingsession: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         return makeDragItems(indexpath: indexPath)
     }
-    //查找cell并转化为drag item，来提供给delegate
+    //查找cell并转化为drag item，来提供给delegate（本地drag）
     //todo:待修改，也许需要同时给一个url
     func makeDragItems(indexpath: IndexPath) -> [UIDragItem]{
         if let image = (self.collection.cellForItem(at: indexpath) as? Collection_Cell)?.viewInCollectionCell.backgroundImage{
@@ -69,7 +157,7 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     
-
+    //初始化collection
     @IBOutlet weak var collection: UICollectionView!{
         didSet{
             collection.dataSource = self
@@ -88,17 +176,16 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     var collectionViewModel = [photoStruc(name: "twogirls", url: nil, aspecRatio: 1202/1700), photoStruc(name: "Megumi", url: nil, aspecRatio: 1932/1266),photoStruc(name: "onion", url: nil, aspecRatio: 2396/1920)]
     //有多少个cell
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.collectionViewModel.count
     }
     
     //cell的显示倍数
     var scale = CGFloat(0.5)
-    //cell大小
+    //cell大小(宽度统一，高度根据长宽比自动变化)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.contentSize.width
         let aspectRatio = self.collectionViewModel[indexPath.item].aspecRatio
         return CGSize(width: self.scale*width, height: self.scale*CGFloat(Float(width)*aspectRatio))
-        
     }
     
     //每个cell怎么搞
@@ -108,6 +195,14 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
             //当是默认图片的时候(?)
             if let picname = self.collectionViewModel[indexPath.item].name{
                 collectCell.viewInCollectionCell.backgroundImage = UIImage(named: picname)
+            }else{
+                //当是外部图片，靠url拿图片
+                let imageData = try? Data(contentsOf: self.collectionViewModel[indexPath.item].url!)
+                if (imageData != nil){
+                    collectCell.viewInCollectionCell.backgroundImage = UIImage(data: imageData!)
+                }else{
+                    print("cant get the image using URL")
+                }
             }
             
         }
