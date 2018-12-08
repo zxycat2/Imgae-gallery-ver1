@@ -102,7 +102,7 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
                         placeHolder.deletePlaceholder()
                     }
                 })
-                //获取图片url
+                // 获取图片url
                 item.dragItem.itemProvider.loadObject(ofClass: NSURL.self, completionHandler: {(provider, error) in
                     DispatchQueue.main.async {
                         if var photoURL = provider as? URL{
@@ -187,10 +187,17 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
         let aspectRatio = self.collectionViewModel[indexPath.item].aspecRatio
         return CGSize(width: self.scale*width, height: self.scale*CGFloat(Float(width)*aspectRatio))
     }
+    //单击cell后执行perform segue
+    @objc func performSegueToScrollView(sender: UITapGestureRecognizer){
+        performSegue(withIdentifier: "segueToScrollView", sender: sender)
+    }
     
     //每个cell怎么搞
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        //单击手势
+        let tap = UITapGestureRecognizer(target: self, action:  #selector(performSegueToScrollView))
+        cell.addGestureRecognizer(tap)
         if let collectCell = cell as? Collection_Cell{
             //当是默认图片的时候(?)
             if let picname = self.collectionViewModel[indexPath.item].name{
@@ -218,14 +225,10 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
+ 
 
 }
