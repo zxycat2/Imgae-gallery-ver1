@@ -225,9 +225,22 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
     }
     
 
-    
+    //准备scrollView的segue way页面
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        print("!!")
+        if let point = (sender as? UITapGestureRecognizer)?.location(in: self.collection){
+            let index = self.collection.indexPathForItem(at: point)?.item
+            print(index!)
+            let scrollView = segue.destination as! PhotoScroll_ViewController
+            if let photoName = (self.collectionViewModel[index!]).name{
+                print(photoName)
+                scrollView.photoName = photoName
+            }else{
+                let photoURL = (self.collectionViewModel[index!]).url
+                scrollView.photoURL = photoURL
+            }
+            
+        }
     }
  
 

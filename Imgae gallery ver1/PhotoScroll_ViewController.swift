@@ -8,14 +8,58 @@
 
 import UIKit
 
-class PhotoScroll_ViewController: UIViewController {
-    @IBOutlet weak var scrollView: UIScrollView!
-    var photoURL:URL?
+class PhotoScroll_ViewController: UIViewController, UIScrollViewDelegate{
     
+    let imageView = UIImageView()
+    
+    
+    @IBOutlet weak var theScrollView: UIScrollView!{
+        didSet{
+            print("Scroll View did set")
+            theScrollView.maximumZoomScale = 500.0
+            theScrollView.minimumZoomScale = 0.01
+            theScrollView.delegate = self
+        }
+    }
+    var photoURL:URL?{
+        didSet{
+            let imageData = try? Data(contentsOf: self.photoURL!)
+            if (imageData != nil){
+                self.image = UIImage(data: imageData!)!
+            }else{
+                print("cant get the image using URL")
+            }
+        }
+    }
+    var photoName:String?{
+        didSet{
+            print("Scroll:"+photoName!)
+            self.image = UIImage(named: self.photoName!)!
+        }
+    }
+    
+    var image:UIImage?{
+        didSet{
+            self.imageView.image = self.image
+            imageView.sizeToFit()
+            print(theScrollView)
+            self.hasImage = true
+        }
+    }
+    var hasImage = false
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if hasImage{
+            theScrollView.addSubview(imageView)
+            theScrollView.contentSize = imageView.frame.size
+        }else{
+            print("Failed to fet the Image")
+        }
         // Do any additional setup after loading the view.
     }
     
