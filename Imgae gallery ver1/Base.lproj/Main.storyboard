@@ -134,8 +134,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLK-WE-WSN">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kLK-WE-WSN">
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mbr-8Y-SVl">
+                                        <rect key="frame" x="407" y="546" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mbr-8Y-SVl" firstAttribute="centerX" secondItem="kLK-WE-WSN" secondAttribute="centerX" id="duB-xv-W9V"/>
+                                    <constraint firstItem="mbr-8Y-SVl" firstAttribute="centerY" secondItem="kLK-WE-WSN" secondAttribute="centerY" id="eDK-hy-rCP"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -148,6 +157,7 @@
                         <viewLayoutGuide key="safeArea" id="OTn-J5-Dmb"/>
                     </view>
                     <connections>
+                        <outlet property="spinner" destination="mbr-8Y-SVl" id="v15-AE-AxC"/>
                         <outlet property="theScrollView" destination="kLK-WE-WSN" id="zyX-To-72D"/>
                     </connections>
                 </viewController>

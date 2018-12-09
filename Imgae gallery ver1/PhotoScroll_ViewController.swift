@@ -52,9 +52,11 @@ class PhotoScroll_ViewController: UIViewController, UIScrollViewDelegate{
         return imageView
     }
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
         if hasImage{
+            spinner.removeFromSuperview()
             theScrollView.addSubview(imageView)
             theScrollView.contentSize = imageView.frame.size
         }else{
