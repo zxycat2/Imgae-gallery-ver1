@@ -64,16 +64,19 @@ class MyTableViewController: UITableViewController {
             cell.addGestureRecognizer(singleTap)
             //单击双击共存
             singleTap.require(toFail: doubleTap)
-            //识别号
-            self.tableCellSerialNumber += 1
             
-            (cell as! CustomTableViewCell).serialNumber = tableCellSerialNumber
-            print(tableCellSerialNumber)
+            if (cell as! CustomTableViewCell).serialNumber == nil{
+                //识别号
+                self.tableCellSerialNumber += 1
+                
+                (cell as! CustomTableViewCell).serialNumber = tableCellSerialNumber
+                print(tableCellSerialNumber)
+            }
         }else{
             cell.textLabel?.text = self.deletedTableModel[indexPath.row]
         }
         
-        
+        print(indexPath)
         return cell
     }
     //双击后触发
@@ -127,7 +130,18 @@ class MyTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1{
             return UISwipeActionsConfiguration(actions: [UIContextualAction(style: .normal, title: "我后悔了", handler: {_,_,_ in
-                print("?")
+                DispatchQueue.main.async {
+                    let cellSerialNumber = (tableView.cellForRow(at: indexPath) as! DeletedTableViewCell).serialNumber
+                    let cellName = self.deletedTableModel.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                   
+                    
+                    self.regularTableModel.append(cellName)
+                    self.tableView.insertRows(at: [[0,self.regularTableModel.count-1]], with: .automatic)
+                    
+                    (self.tableView.cellForRow(at: [0,self.regularTableModel.count-1]) as! CustomTableViewCell).serialNumber = cellSerialNumber
+                }
             })])
         }else{
             return nil
@@ -140,8 +154,18 @@ class MyTableViewController: UITableViewController {
             // Delete the row from the data source
             switch indexPath.section{
                 case 0:
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    self.regularTableModel.remove(at: indexPath.row)
+                    DispatchQueue.main.async {
+                        let cellSerialNumber = (tableView.cellForRow(at: indexPath) as! CustomTableViewCell).serialNumber
+                        let cellName = self.regularTableModel.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        
+                        print("yeah")
+                        
+                        self.deletedTableModel.append(cellName)
+                        self.tableView.insertRows(at: [[1,self.deletedTableModel.count-1]], with: .automatic)
+
+                        (self.tableView.cellForRow(at: [1,self.deletedTableModel.count-1]) as! DeletedTableViewCell).serialNumber = cellSerialNumber
+                    }
                 default:
                     self.galleries.removeValue(forKey: (self.tableView.cellForRow(at: indexPath) as! CustomTableViewCell).serialNumber!)
                     tableView.deleteRows(at: [indexPath], with: .fade)

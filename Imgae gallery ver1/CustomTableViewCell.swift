@@ -26,6 +26,7 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.textLabel?.text =  self.textView.text
         self.textView.resignFirstResponder()
         self.textView.isHidden = true
+        
         return true
     }
     
