@@ -72,6 +72,8 @@ extension UIImage
     }
 }
 class Collection_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate{
+    
+    
     //执行drop的函数
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
@@ -217,10 +219,10 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
         return cell
     }
     
-   
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         // Do any additional setup after loading the view.
     }
     
