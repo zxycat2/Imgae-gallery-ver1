@@ -27,6 +27,7 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.textView.resignFirstResponder()
         self.textView.isHidden = true
         
+        
         return true
     }
     

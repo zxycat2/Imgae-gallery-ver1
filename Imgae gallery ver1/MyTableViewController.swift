@@ -9,6 +9,7 @@
 import UIKit
 
 class MyTableViewController: UITableViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +34,17 @@ class MyTableViewController: UITableViewController {
         }
     }
     @IBAction func addButton(_ sender: Any) {
+        self.updateModel()
         self.regularTableModel += ["untitled"]
         tableView.reloadData()
+    }
+    //更新Model的函数
+    func updateModel() {
+        for index in 0...self.regularTableModel.count-1{
+            if self.tableView.cellForRow(at: [0,index])?.textLabel!.text != self.regularTableModel[index]{
+                self.regularTableModel[index] = (self.tableView.cellForRow(at: [0,index])?.textLabel!.text)!
+            }
+        }
     }
     
     var regularTableModel = ["one", "two", "three"]
@@ -128,6 +138,7 @@ class MyTableViewController: UITableViewController {
 
     //反向滑动取消删除
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        self.updateModel()
         if indexPath.section == 1{
             return UISwipeActionsConfiguration(actions: [UIContextualAction(style: .normal, title: "我后悔了", handler: {_,_,_ in
                 DispatchQueue.main.async {
