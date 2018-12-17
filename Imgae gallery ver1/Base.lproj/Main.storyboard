@@ -42,7 +42,7 @@
                                     <outlet property="textView" destination="FED-KB-iTF" id="dnX-xZ-z1L"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="deletedCell" textLabel="RbX-Z6-pWe" style="IBUITableViewCellStyleDefault" id="l8y-27-jwO">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="deletedCell" textLabel="RbX-Z6-pWe" style="IBUITableViewCellStyleDefault" id="l8y-27-jwO" customClass="DeletedTableViewCell" customModule="Imgae_gallery_ver1" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="l8y-27-jwO" id="2QY-u8-XUH">

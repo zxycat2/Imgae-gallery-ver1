@@ -39,7 +39,7 @@ class MyTableViewController: UITableViewController {
     
     var regularTableModel = ["one", "two", "three"]
     
-    var deletedTableModel = ["one", "two", "three"]
+    var deletedTableModel = ["D-one", "D-two", "D-three"]
 
     var tableCellSerialNumber = 0
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,7 +123,16 @@ class MyTableViewController: UITableViewController {
     }
     */
 
-    
+    //反向滑动取消删除
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == 1{
+            return UISwipeActionsConfiguration(actions: [UIContextualAction(style: .normal, title: "我后悔了", handler: {_,_,_ in
+                print("?")
+            })])
+        }else{
+            return nil
+        }
+    }
     // Override to support editing the table view.
     //table编辑和删除
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -131,13 +140,13 @@ class MyTableViewController: UITableViewController {
             // Delete the row from the data source
             switch indexPath.section{
                 case 0:
-                    tableView.deselectRow(at: indexPath, animated: true)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
                     self.regularTableModel.remove(at: indexPath.row)
                 default:
-                    tableView.deselectRow(at: indexPath, animated: true)
+                    self.galleries.removeValue(forKey: (self.tableView.cellForRow(at: indexPath) as! CustomTableViewCell).serialNumber!)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
                     self.deletedTableModel.remove(at: indexPath.row)
             }
-            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
