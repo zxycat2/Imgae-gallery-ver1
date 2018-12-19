@@ -73,6 +73,10 @@ extension UIImage
 }
 class Collection_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate{
     
+    //关于layout
+    var flowLayout: UICollectionViewFlowLayout? {
+        return self.collection.collectionViewLayout as? UICollectionViewFlowLayout
+    }
     
     //执行drop的函数
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
@@ -216,13 +220,28 @@ class Collection_ViewController: UIViewController, UICollectionViewDataSource, U
             
         }
         print("create"+String(indexPath.item))
+    
         return cell
     }
-    
+    //缩放函数
+    @objc func doPinching(sender:UIPinchGestureRecognizer){
+        print(sender.scale)
+        if  sender.state == .ended{
+            if sender.scale > 1, (self.collection.cellForItem(at: [0,0])?.frame.width)! < self.collection.frame.width{
+                self.scale += CGFloat(0.1)
+                self.flowLayout?.invalidateLayout()
+            }else{
+                self.scale -= CGFloat(0.1)
+                self.flowLayout?.invalidateLayout()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(doPinching))
+        self.collection.addGestureRecognizer(pinchGesture)
         // Do any additional setup after loading the view.
     }
     
